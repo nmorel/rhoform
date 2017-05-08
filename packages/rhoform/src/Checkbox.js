@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-export default class extends Component {
+export default class Checkbox extends Component {
 
   static propTypes = {
     value: PropTypes.bool,

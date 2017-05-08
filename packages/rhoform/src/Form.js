@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import FormObjectWrapper from './FormObjectWrapper';
 import {get, set} from './tools';
 
-export default class extends Component {
+export default class Form extends Component {
 
   static childContextTypes = {
     rhoform: PropTypes.object

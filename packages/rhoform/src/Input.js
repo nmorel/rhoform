@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-export default class extends Component {
+export default class Input extends Component {
 
   static propTypes = {
     type: PropTypes.string.isRequired,

@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 
 export default () => (Child) => {
-  return class extends Component {
+  const result = class extends Component {
     static contextTypes = {
       rhoform: PropTypes.object.isRequired
     };
@@ -43,4 +43,6 @@ export default () => (Child) => {
       )
     }
   }
+  result.displayName = `ConnectInput(${Child.displayName || Child.name || 'Component'})`;
+  return result;
 }
