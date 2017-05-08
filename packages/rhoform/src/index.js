@@ -1,6 +1,7 @@
 export Form from './Form';
 export FormObjectWrapper from './FormObjectWrapper';
 export connectInput from './connectInput';
+export connectStatus from './connectStatus';
 
-export Input from './Input';
-export Checkbox from './Checkbox';
+export InputText, {FormInputText} from './InputText';
+export InputCheckbox, {FormInputCheckbox} from './InputCheckbox';

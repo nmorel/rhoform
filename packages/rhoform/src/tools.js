@@ -1,5 +1,17 @@
 const arrayRegex = /^(.*)\[([0-9]+)\]$/;
 
+export function setDefault(obj, path, value) {
+  if (!path) {
+    return obj === undefined ? value : obj;
+  }
+
+  const paths = path.split('.');
+  if (_get(obj, paths) === undefined) {
+    return _assign(obj, paths, value);
+  }
+  return obj;
+}
+
 export function get(obj, path) {
   return _get(obj, path.split('.'));
 }
@@ -46,10 +58,12 @@ function _assign(model, path, value) {
     const currentArray = model ? (model[head] || []) : [];
     const newArray = [];
     for (let i = 0; i < Math.max(arrayIndex + 1, currentArray.length); i++) {
+      let currentArrayValue = currentArray[i];
+      currentArrayValue = currentArrayValue === undefined ? null : currentArrayValue;
       if (i === arrayIndex) {
-        newArray[i] = _assign(currentArray[i] || {}, tail, value)
+        newArray[i] = _assign(currentArrayValue, tail, value)
       } else {
-        newArray[i] = currentArray[i] || null;
+        newArray[i] = currentArrayValue;
       }
     }
     return Object.assign({}, model || {}, {

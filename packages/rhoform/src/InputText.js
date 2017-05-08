@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import connectInput from './connectInput';
 
-export default class Input extends Component {
+export default class InputText extends Component {
 
   static propTypes = {
     type: PropTypes.string.isRequired,
@@ -27,3 +28,5 @@ export default class Input extends Component {
     )
   }
 }
+
+export const FormInputText = connectInput()(InputText);

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {contextPropTypes} from './context';
+import {calculateValidators} from './validators';
 
-export default () => (Child) => {
-  const result = class extends Component {
-    static contextTypes = {
-      rhoform: PropTypes.object.isRequired
-    };
+export default (options = {}) => (Child) => {
+  class ConnectInput extends Component {
+    static contextTypes = contextPropTypes;
 
     static propTypes = {
-      name: PropTypes.string.isRequired,
+      name: PropTypes.string,
     };
 
     state = {
@@ -18,13 +18,30 @@ export default () => (Child) => {
     componentWillMount() {
       this.setState({
         value: this.context.rhoform.getValue(this.props.name),
-      })
+      });
+
+      calculateValidators(this.props, undefined, (validators) => {
+        this.context.rhoform.register(this.props.name, {
+          defaultValue: this.props.hasOwnProperty('defaultValue') ? this.props.defaultValue : options.defaultValue,
+          validators,
+        });
+      });
     }
 
     componentWillReceiveProps(nextProps) {
       this.setState({
         value: this.context.rhoform.getValue(nextProps.name),
-      })
+      });
+
+      calculateValidators(nextProps, this.props, (validators, changed) => {
+        if (changed) {
+          this.context.rhoform.updateValidators(nextProps.props.name, validators);
+        }
+      });
+    }
+
+    componentWillUnmount() {
+      this.context.rhoform.unregister(this.props.name);
     }
 
     onChange = (value) => {
@@ -44,6 +61,6 @@ export default () => (Child) => {
       )
     }
   }
-  result.displayName = `ConnectInput(${Child.displayName || Child.name || 'Component'})`;
-  return result;
+  ConnectInput.displayName = `ConnectInput(${Child.displayName || Child.name || 'Component'})`;
+  return ConnectInput;
 }

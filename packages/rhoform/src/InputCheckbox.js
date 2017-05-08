@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import connectInput from './connectInput';
 
-export default class Checkbox extends Component {
+export default class InputCheckbox extends Component {
 
   static propTypes = {
     value: PropTypes.bool,
@@ -23,3 +24,5 @@ export default class Checkbox extends Component {
     )
   }
 }
+
+export const FormInputCheckbox = connectInput()(InputCheckbox);

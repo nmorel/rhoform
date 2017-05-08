@@ -1,0 +1,41 @@
+.FormInputWrapper {
+  display: block;
+  padding: 10px 20px;
+  padding-bottom: 20px;
+}
+
+.FormInputWrapper--label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.FormInputWrapper--input {
+  width: 300px;
+}
+
+.FormInputWrapper--input input[type="text"] {
+  width: 100%;
+  height: 30px;
+  font-size: 18px;
+}
+
+.FormInputWrapper.inError {
+  padding-bottom: 0;
+}
+
+.FormInputWrapper.inError .FormInputWrapper--input input[type="text"] {
+  background-color: rgb(232, 121, 121);
+}
+
+.FormInputWrapper--error {
+  display: block;
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: red;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+

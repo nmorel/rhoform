@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
-import {Form} from 'rhoform';
-import {FormInput, FormCheckbox} from './components';
+import {Form, FormInputText, FormInputCheckbox} from 'rhoform';
+import {FormInputWrapper} from './components';
 
 class App extends Component {
   state = {
@@ -14,40 +14,61 @@ class App extends Component {
     });
   };
 
+  onValidSubmit = (model) => {
+    window.alert('Success!');
+  };
+
+  onInvalidSubmit = () => {
+    window.alert('Please fix the errors before submitting');
+  };
+
   render() {
     return (
       <div className="App">
         <div className="App--form">
-          <Form value={this.state.value} onChange={this.onChange}>
-            <FormInput
-              description="Simple text property at the root of the form's object"
+          <Form value={this.state.value} onChange={this.onChange} onValidSubmit={this.onValidSubmit}
+                onInvalidSubmit={this.onInvalidSubmit}>
+
+            <FormInputWrapper
+              label="Simple text property at the root of the form's object"
               name="rootText"
-              modelFromForm={this.state.value}
-            />
+            >
+              <FormInputText required/>
+            </FormInputWrapper>
 
-            <FormInput
-              description="Text property inside an object"
+            <FormInputWrapper
+              label="Text property inside an object"
               name="object.textInObject"
-              modelFromForm={this.state.value}
-            />
+            >
+              <FormInputText required/>
+            </FormInputWrapper>
 
-            <FormCheckbox
-              description="Boolean property deep inside an object"
+            <FormInputWrapper
+              label="Boolean property deep inside an object"
               name="object.deep.verydeep.bool"
-              modelFromForm={this.state.value}
-            />
+            >
+              <FormInputCheckbox required defaultValue={false}/>
+            </FormInputWrapper>
 
-            <FormInput
-              description="Text property inside an object contained in an array at 1st position"
+            <FormInputWrapper
+              label="Text property inside an object contained in an array at 1st position"
               name="array[0].textInObject"
-              modelFromForm={this.state.value}
-            />
+            >
+              <FormInputText required minLength={2} maxLength={4}/>
+            </FormInputWrapper>
 
-            <FormInput
-              description="Text property contained in an array at 2nd position"
-              name="array[1]"
-              modelFromForm={this.state.value}
-            />
+            {
+              !!this.state.value && this.state.value.object.deep.verydeep.bool && (
+                <FormInputWrapper
+                  label="Text property contained in an array at 2nd position"
+                  name="array[1]"
+                >
+                  <FormInputText required/>
+                </FormInputWrapper>
+              )
+            }
+
+            <button type="submit">Submit</button>
           </Form>
         </div>
         <div className="App--result">
